@@ -223,7 +223,6 @@ export PATH=/opt/ppc-toolchain/bin:/usr/local/bin:$PATH
 alias noop="ssh pi@192.168.1.114"  #Welcome!23
 alias noop="ssh nirvana@192.168.1.113"  #Ovzt@007
 alias android="adb connect 192.168.1.191"
-alias log="git log --oneline --decorate"
 alias c="clear"
 
 function _exit()              # Function to run upon exit of shell.
@@ -309,6 +308,39 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# git aliases
+alias log="git log --oneline --decorate"
+# Getting rid of error message "LF will be replaced by CRLF in git"
+#git config core.autocrlf true
+git config core.autocrlf false
+# https://gist.github.com/mwhite/6887990
+# http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples
+alias s="git status -s"
+# If bash_completion is available, source the file. Else source individual files
+# from bash_completion.d dir (may be for cygwin users)
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+# TODO: Make it work on Cygwin
+#else
+#    for file in /etc/bash_completion.d/* ; do
+#        source "$file"
+#    done
+fi
+
+#if [ ]; then
+#function_exists() {
+#    declare -f -F $1 > /dev/null
+#    return $?
+#}
+#
+#for al in `__git_aliases`; do
+#    alias g$al="git $al"
+#
+#    complete_func=_git_$(__git_aliased_command $al)
+#    function_exists $complete_fnc && __git_complete g$al $complete_func
+#done
+#fi
+#
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
@@ -347,7 +379,4 @@ parse_git_branch() {
 PROMPT_DIRTRIM=3
 export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\] \[\033[33;1m\]\w\[\033[m\] (\$(git branch 2>/dev/null | grep '^*' | colrm 1 2)) \$ "
 
-# Getting rid of error message "LF will be replaced by CRLF in git"
-#git config core.autocrlf true
-git config core.autocrlf false
 
