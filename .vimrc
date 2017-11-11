@@ -647,3 +647,10 @@ vnoremap <S-F12>   :TrimSpaces<CR>
 " Restricting autocmd to only these files
 "autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
+set cursorline
+set cursorcolumn
+
+" Enable gitgutter by default
+" let g:gitgutter_highlight_lines = 1
+let g:gitgutter_enabled = 1
+

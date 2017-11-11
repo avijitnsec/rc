@@ -322,3 +322,32 @@ esac
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
+
+function title() {
+      export PS1="\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n$ "
+      echo -ne "\e]0;$1\a"
+}
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+#function settitlepath() {
+    #In above PS1 we defined following properties
+    #\u@\h \[\033[32m\] - user, host name and its displaying color
+    #\w\[\033[33m\] - current working directory and its displaying color
+    #\$(parse_git_branch)\[\033[00m\] - git branch name and its displaying color
+    #export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+    #export PS1="\[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+#}
+
+
+# In Bash prompt show max 3 parnt dir
+PROMPT_DIRTRIM=3
+export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\] \[\033[33;1m\]\w\[\033[m\] (\$(git branch 2>/dev/null | grep '^*' | colrm 1 2)) \$ "
+
+# Getting rid of error message "LF will be replaced by CRLF in git"
+#git config core.autocrlf true
+git config core.autocrlf false
+
