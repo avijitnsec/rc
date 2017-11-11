@@ -645,8 +645,7 @@ vnoremap <S-F12>   :TrimSpaces<CR>
 "autocmd BufWritePre *.pl %s/\s\+$//e
 
 " Restricting autocmd to only these files
-"autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
-
+" autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 set cursorline
 set cursorcolumn
 
@@ -654,3 +653,10 @@ set cursorcolumn
 " let g:gitgutter_highlight_lines = 1
 let g:gitgutter_enabled = 1
 
+if has("autocmd")
+  " Highlight TODO, FIXME, NOTE, etc.
+  if v:version > 701
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
+    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+  endif
+endif
